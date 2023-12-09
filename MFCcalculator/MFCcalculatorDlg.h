@@ -32,5 +32,34 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	// 연산 과정을 보여주는 디스플레이
+	CString m_Display_EditCtrl;
+
+
 	afx_msg void OnBnClickedButtonMultiple();
+
+
+	afx_msg void OnBnClickedButtonPluse();
+	afx_msg void OnBnClickedButton0();
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedButton4();
+	afx_msg void OnBnClickedButton5();
+	afx_msg void OnBnClickedButton6();
+	afx_msg void OnBnClickedButton7();
+	afx_msg void OnBnClickedButton8();
+	afx_msg void OnBnClickedButton9();
+
+	afx_msg void OnBnClickedButtonEqual();
+	afx_msg void OnBnClickedButtondivide();
+	afx_msg void OnBnClickedButtonMinus();
+
+	afx_msg void OnBnClickedButtonAllclear();
+private:
+	// 계산을 완료하고 지나간 이전 디스플레이
+	CString m_Before_EditCtrl;
+	bool m_isOper;
+	int Calculate();
+
 };

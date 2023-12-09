@@ -7,6 +7,7 @@
 #include "MFCcalculator.h"
 #include "MFCcalculatorDlg.h"
 #include "afxdialogex.h"
+#include<string>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -176,35 +177,6 @@ HCURSOR CMFCcalculatorDlg::OnQueryDragIcon()
 
 
 
-void CMFCcalculatorDlg::OnBnClickedButtonMultiple()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	if (true == m_isOper)
-	{
-		return;
-	}
-	UpdateData(TRUE);
-	m_Display_EditCtrl += " * ";
-	UpdateData(FALSE);
-	m_isOper = true;
-}
-
-
-void CMFCcalculatorDlg::OnBnClickedButtonPluse()
-{
-	if (true == m_isOper)
-	{
-		return;
-	}
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(TRUE);
-	m_Display_EditCtrl += " + ";
-	UpdateData(FALSE);
-	m_isOper = true;
-}
-
-
-
 void CMFCcalculatorDlg::OnBnClickedButton1()
 {
 
@@ -329,6 +301,7 @@ void CMFCcalculatorDlg::OnBnClickedButtondivide()
 {
 	if (true == m_isOper)
 	{
+		//m_FirstNumber = _ttoi(m_Display_EditCtrl);
 		return;
 	}
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -351,3 +324,32 @@ void CMFCcalculatorDlg::OnBnClickedButtonMinus()
 	UpdateData(FALSE);
 	m_isOper = true;
 }
+
+
+void CMFCcalculatorDlg::OnBnClickedButtonMultiple()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (true == m_isOper)
+	{
+		return;
+	}
+	UpdateData(TRUE);
+	m_Display_EditCtrl += " * ";
+	UpdateData(FALSE);
+	m_isOper = true;
+}
+
+
+void CMFCcalculatorDlg::OnBnClickedButtonPluse()
+{
+	if (true == m_isOper)
+	{
+		return;
+	}
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_Display_EditCtrl += " + ";
+	UpdateData(FALSE);
+	m_isOper = true;
+}
+

@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <vector>
 
 
 // CMFCcalculatorDlg 대화 상자
@@ -62,4 +63,5 @@ private:
 	bool m_isOper;
 	int Calculate();
 
+	int m_FirstNumber;
 };

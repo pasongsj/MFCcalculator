@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
-    <ProjectGuid>{27F35B99-1450-44EB-968B-E004294F14FE}</ProjectGuid>
+    <ProjectGuid>{5D5BC518-526B-4567-B23B-7164902F8E05}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
     <RootNamespace>MFCcalculator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>

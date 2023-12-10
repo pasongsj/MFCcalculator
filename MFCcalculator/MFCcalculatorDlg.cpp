@@ -49,13 +49,14 @@ END_MESSAGE_MAP()
 
 // CMFCcalculatorDlg 대화 상자
 
-
-
 CMFCcalculatorDlg::CMFCcalculatorDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFCCALCULATOR_DIALOG, pParent)
 	, m_Display_EditCtrl(_T(""))
 	, m_Before_EditCtrl(_T(""))
 	, m_isOper(false)
+	, m_FirstNumber(0)
+	, CurNumber(_T(""))
+	, CurOper(OperationSymbol::None)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -87,6 +88,7 @@ BEGIN_MESSAGE_MAP(CMFCcalculatorDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_Equal, &CMFCcalculatorDlg::OnBnClickedButtonEqual)
 	ON_BN_CLICKED(IDC_BUTTON_divide, &CMFCcalculatorDlg::OnBnClickedButtondivide)
 	ON_BN_CLICKED(IDC_BUTTON_Minus, &CMFCcalculatorDlg::OnBnClickedButtonMinus)
+	ON_BN_CLICKED(IDC_BUTTON_ClearEntry, &CMFCcalculatorDlg::OnBnClickedButtonClearentry)
 END_MESSAGE_MAP()
 
 
@@ -177,45 +179,6 @@ HCURSOR CMFCcalculatorDlg::OnQueryDragIcon()
 
 
 
-void CMFCcalculatorDlg::OnBnClickedButton1()
-{
-
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(TRUE);
-	m_Display_EditCtrl += '1';
-	UpdateData(FALSE);
-
-
-}
-
-
-void CMFCcalculatorDlg::OnBnClickedButton3()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(TRUE);
-	m_Display_EditCtrl += '3';
-	UpdateData(FALSE);
-}
-
-
-void CMFCcalculatorDlg::OnBnClickedButton2()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(TRUE);
-	m_Display_EditCtrl += '2';
-	UpdateData(FALSE);
-}
-
-
-void CMFCcalculatorDlg::OnBnClickedButton0()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(TRUE);
-	m_Display_EditCtrl += '0';
-	UpdateData(FALSE);
-}
-
-
 void CMFCcalculatorDlg::OnBnClickedButtonAllclear()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -223,14 +186,60 @@ void CMFCcalculatorDlg::OnBnClickedButtonAllclear()
 	m_Display_EditCtrl = "";
 	m_Before_EditCtrl = "";
 	UpdateData(FALSE);
+	CurNumber = "";
+	m_FirstNumber = 0;
+	CurOper = OperationSymbol::None;
 }
 
+
+
+void CMFCcalculatorDlg::OnBnClickedButton0()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	AddNumber('0');
+	//m_Display_EditCtrl += '0';
+	UpdateData(FALSE);
+}
+
+
+void CMFCcalculatorDlg::OnBnClickedButton1()
+{
+
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	AddNumber('1');
+	//m_Display_EditCtrl += '1';
+	UpdateData(FALSE);
+
+
+}
+
+void CMFCcalculatorDlg::OnBnClickedButton2()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	AddNumber('2');
+	//m_Display_EditCtrl += '2';
+	UpdateData(FALSE);
+}
+
+
+void CMFCcalculatorDlg::OnBnClickedButton3()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	AddNumber('3');
+	//m_Display_EditCtrl += '3';
+	UpdateData(FALSE);
+}
 
 void CMFCcalculatorDlg::OnBnClickedButton4()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	m_Display_EditCtrl += '4';
+	AddNumber('4');
+	//m_Display_EditCtrl += '4';
 	UpdateData(FALSE);
 }
 
@@ -239,7 +248,8 @@ void CMFCcalculatorDlg::OnBnClickedButton5()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	m_Display_EditCtrl += '5';
+	AddNumber('5');
+	//m_Display_EditCtrl += '5';
 	UpdateData(FALSE);
 }
 
@@ -248,7 +258,8 @@ void CMFCcalculatorDlg::OnBnClickedButton6()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	m_Display_EditCtrl += '6';
+	AddNumber('6');
+	//m_Display_EditCtrl += '6';
 	UpdateData(FALSE);
 }
 
@@ -257,7 +268,8 @@ void CMFCcalculatorDlg::OnBnClickedButton7()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	m_Display_EditCtrl += '7';
+	AddNumber('7');
+	//m_Display_EditCtrl += '7';
 	UpdateData(FALSE);
 }
 
@@ -266,7 +278,8 @@ void CMFCcalculatorDlg::OnBnClickedButton8()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	m_Display_EditCtrl += '8';
+	AddNumber('8');
+	//m_Display_EditCtrl += '8';
 	UpdateData(FALSE);
 }
 
@@ -275,9 +288,17 @@ void CMFCcalculatorDlg::OnBnClickedButton9()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	m_Display_EditCtrl += '9';
+	AddNumber('9');
+	//m_Display_EditCtrl += '9';
 	UpdateData(FALSE);
 }
+
+void CMFCcalculatorDlg::AddNumber(char _Num)
+{
+	m_Display_EditCtrl += _Num;
+	CurNumber += _Num;
+}
+
 
 int CMFCcalculatorDlg::Calculate()
 {
@@ -291,7 +312,30 @@ void CMFCcalculatorDlg::OnBnClickedButtonEqual() // 연산
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	m_Display_EditCtrl += " = ";
+	m_Before_EditCtrl = m_Display_EditCtrl;
+	int SecondNumber = _ttoi(CurNumber);
+	int resultNumber = 0;
+	switch (CurOper)
+	{
+	case CMFCcalculatorDlg::OperationSymbol::None:
+		break;
+	case CMFCcalculatorDlg::OperationSymbol::Pluse:
+		resultNumber = m_FirstNumber + SecondNumber;
+		break;
+	case CMFCcalculatorDlg::OperationSymbol::Minus:
+		resultNumber = m_FirstNumber - SecondNumber;
+		break;
+	case CMFCcalculatorDlg::OperationSymbol::Multiple:
+		resultNumber = m_FirstNumber * SecondNumber;
+		break;
+	case CMFCcalculatorDlg::OperationSymbol::Divide:
+		resultNumber = m_FirstNumber / SecondNumber;
+		break;
+	default:
+		break;
+	}
+	CurOper = OperationSymbol::None;
+	m_Display_EditCtrl.Format(_T("%d"), resultNumber);
 	m_isOper = false;
 	UpdateData(FALSE);
 }
@@ -307,6 +351,7 @@ void CMFCcalculatorDlg::OnBnClickedButtondivide()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_Display_EditCtrl += " / ";
+	SetOperation(OperationSymbol::Divide);
 	UpdateData(FALSE);
 	m_isOper = true;
 }
@@ -321,6 +366,7 @@ void CMFCcalculatorDlg::OnBnClickedButtonMinus()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_Display_EditCtrl += " - ";
+	SetOperation(OperationSymbol::Minus);
 	UpdateData(FALSE);
 	m_isOper = true;
 }
@@ -335,6 +381,7 @@ void CMFCcalculatorDlg::OnBnClickedButtonMultiple()
 	}
 	UpdateData(TRUE);
 	m_Display_EditCtrl += " * ";
+	SetOperation(OperationSymbol::Multiple);
 	UpdateData(FALSE);
 	m_isOper = true;
 }
@@ -349,7 +396,33 @@ void CMFCcalculatorDlg::OnBnClickedButtonPluse()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_Display_EditCtrl += " + ";
+	SetOperation(OperationSymbol::Pluse);
 	UpdateData(FALSE);
 	m_isOper = true;
 }
 
+void CMFCcalculatorDlg::SetOperation(OperationSymbol _Oper)
+{
+	// 중간 연산기호 저장
+	if (OperationSymbol::None == CurOper && OperationSymbol::None != _Oper)
+	{
+		CurOper = _Oper;
+		m_FirstNumber = _ttoi(CurNumber);
+		CurNumber = "";
+	}
+	// 연산기호 reset
+	else if (OperationSymbol::None == _Oper) 
+	{
+		CurOper = _Oper;
+	}
+}
+
+
+void CMFCcalculatorDlg::OnBnClickedButtonClearentry()
+{
+	UpdateData(TRUE);
+	m_Display_EditCtrl.Delete(m_Display_EditCtrl.GetLength() - 1);
+	UpdateData(FALSE);
+	CurNumber.Delete(CurNumber.GetLength() - 1);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}

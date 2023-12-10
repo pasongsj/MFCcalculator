@@ -33,8 +33,6 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	// 연산 과정을 보여주는 디스플레이
-	CString m_Display_EditCtrl;
 
 
 	afx_msg void OnBnClickedButtonMultiple();
@@ -58,10 +56,36 @@ public:
 
 	afx_msg void OnBnClickedButtonAllclear();
 private:
+
+	enum class OperationSymbol
+	{
+		None,
+		Pluse,
+		Minus,
+		Multiple,
+		Divide,
+	};
+
+	// 연산 과정을 보여주는 디스플레이
+	CString m_Display_EditCtrl;
 	// 계산을 완료하고 지나간 이전 디스플레이
 	CString m_Before_EditCtrl;
+	// 연산기호를 입력했는가?
 	bool m_isOper;
-	int Calculate();
-
+	// first (+,-,*./) second 시 first에 해당하는 숫자
 	int m_FirstNumber;
+	// 현재 추가하고 있는 숫자
+	CString CurNumber;
+	// 현재 연산기호
+	OperationSymbol CurOper;
+
+	// 숫자 버튼을 눌렀을 때 화면에 숫자를 display할 수 있도록 함
+	void AddNumber(char _Num);
+	// 계산함수
+	int Calculate();
+	// 중간 연산기호를 설정함
+	void SetOperation(OperationSymbol _Oper);
+
+public:
+	afx_msg void OnBnClickedButtonClearentry();
 };
